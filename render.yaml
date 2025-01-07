@@ -1,17 +1,34 @@
+# services:
+#   - type: web
+#     name: twitter-trends
+#     env: python
+#     buildCommand: chmod +x render-build.sh && ./render-build.sh && && pip install -r requirements.txt
+#     startCommand: |
+#       chmod +x /opt/render/project/.render/chromedriver/chromedriver
+#       export PATH="/opt/render/project/.render/chrome/opt/google/chrome:$PATH"
+#       export PATH="/opt/render/project/.render/chromedriver:$PATH"
+#       gunicorn app:app
+#     envVars:
+#       - key: PYTHON_VERSION
+#         value: 3.9.0
+#       - key: RENDER
+#         value: true
+#       - key: PYTHONUNBUFFERED
+#         value: true
 services:
   - type: web
     name: twitter-trends
     env: python
-    buildCommand: chmod +x render-build.sh && ./render-build.sh && && pip install -r requirements.txt
-    startCommand: |
-      chmod +x /opt/render/project/.render/chromedriver/chromedriver
-      export PATH="/opt/render/project/.render/chrome/opt/google/chrome:$PATH"
-      export PATH="/opt/render/project/.render/chromedriver:$PATH"
-      gunicorn app:app
+    buildCommand:  chmod +x setup.sh && ./setup.sh && pip install -r requirements.txt
+    startCommand: gunicorn app:app
     envVars:
       - key: PYTHON_VERSION
-        value: 3.9.0
+        value: 3.12
       - key: RENDER
         value: true
       - key: PYTHONUNBUFFERED
         value: true
+    buildFilter:
+      paths:
+        - requirements.txt
+        - "**/*.py"
