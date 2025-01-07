@@ -2,7 +2,7 @@ services:
   - type: web
     name: twitter-trends
     env: python
-    buildCommand: chmod +x render-build.sh && ./render-build.sh
+    buildCommand: chmod +x render-build.sh && ./render-build.sh && && pip install -r requirements.txt
     startCommand: |
       chmod +x /opt/render/project/.render/chromedriver/chromedriver
       export PATH="/opt/render/project/.render/chrome/opt/google/chrome:$PATH"
