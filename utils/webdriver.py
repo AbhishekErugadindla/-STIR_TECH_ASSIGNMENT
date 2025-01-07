@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 import os
 
 def setup_driver():
@@ -14,14 +15,10 @@ def setup_driver():
     chrome_options.add_argument('--window-size=1920,1080')
 
     if os.environ.get('RENDER'):
-        # Production settings for Render
         CHROME_PATH = "/opt/render/project/.render/chrome/opt/google/chrome/chrome"
-        CHROMEDRIVER_PATH = "/opt/render/project/.render/chromedriver/chromedriver"
-
         chrome_options.binary_location = CHROME_PATH
-        service = Service(executable_path=CHROMEDRIVER_PATH)
+        service = Service("/opt/render/project/.render/chromedriver/chromedriver")
     else:
-        # Local development settings
-        service = Service('chromedriver/chromedriver-win64/chromedriver.exe')
+        service = Service(ChromeDriverManager().install())
 
     return webdriver.Chrome(service=service, options=chrome_options)
