@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: twitter-trends
+    env: python
+    buildCommand: chmod +x render-build.sh && ./render-build.sh
+    startCommand: |
+      export PATH="/opt/render/project/.render/chrome/opt/google/chrome:$PATH"
+      export PATH="/opt/render/project/.render/chromedriver:$PATH"
+      gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: RENDER
+        value: true
+      - key: PYTHONUNBUFFERED
+        value: true
